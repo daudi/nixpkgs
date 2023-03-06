@@ -26,7 +26,7 @@
 
 stdenv.mkDerivation rec {
   pname = "gnucash";
-  version = "4.12";
+  version = "4.13";
 
   # raw source code doesn't work out of box; fetchFromGitHub not usable
   src = fetchurl {
