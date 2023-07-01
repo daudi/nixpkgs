@@ -67,4 +67,17 @@ in
     ];
     jdk = jdk17;
   };
+
+   pdfstudio2023 = callPackage ./common.nix rec {
+    inherit desktopName longDescription pname program year;
+    version = "${year}.1.0";
+    src = fetchurl {
+      url = "https://download.qoppa.com/pdfstudio/v${year}/PDFStudio_v${dot2dash version}_linux64.deb";
+      sha256 = "sha256-bti+WI8JdOmUsHq8ijfxGC4ZsWXwbwwM26kuBgPDUMQ=";
+    };
+    extraBuildInputs = [
+      (lib.getLib stdenv.cc.cc)  # for libstdc++.so.6 and libgomp.so.1
+    ];
+    jdk = jdk17;
+  };
 }.${pname}
