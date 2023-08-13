@@ -152,6 +152,7 @@ let
         api_url = "http://${config.services.dockerRegistry.listenAddress}:${toString config.services.dockerRegistry.port}/";
         issuer = cfg.registry.issuer;
       };
+      elasticsearch.indexer_path = "${pkgs.gitlab-elasticsearch-indexer}/bin/gitlab-elasticsearch-indexer";
       extra = {};
       uploads.storage_path = cfg.statePath;
       pages = optionalAttrs cfg.pages.enable {
@@ -1634,7 +1635,7 @@ in {
         "gitlab-config.service"
         "gitlab-db-config.service"
       ] ++ optional (cfg.databaseHost == "") "postgresql.service";
-      wantedBy = [ "gitlab.target" ];
+      requiredBy = [ "gitlab.target" ];
       partOf = [ "gitlab.target" ];
       environment = gitlabEnv;
       path = with pkgs; [
@@ -1644,6 +1645,7 @@ in {
         nodejs
         procps
         gnupg
+        gzip
       ];
       serviceConfig = {
         Type = "notify";
@@ -1683,5 +1685,5 @@ in {
   };
 
   meta.doc = ./gitlab.md;
-
+  meta.maintainers = teams.gitlab.members;
 }

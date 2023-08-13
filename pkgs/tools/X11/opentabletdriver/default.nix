@@ -18,18 +18,18 @@
 
 buildDotnetModule rec {
   pname = "OpenTabletDriver";
-  version = "0.6.1";
+  version = "0.6.2.0";
 
   src = fetchFromGitHub {
     owner = "OpenTabletDriver";
     repo = "OpenTabletDriver";
     rev = "v${version}";
-    sha256 = "sha256-9C6rtq+1WTinlAs0SJs1/J1QRnKm5pGNDSbLQ0kRUXY=";
+    hash = "sha256-D1/DGvSBgG8wZMmyJ7QAHDcsMjC1YgSpxmSYzs6ntJg=";
   };
 
   debPkg = fetchurl {
     url = "https://github.com/OpenTabletDriver/OpenTabletDriver/releases/download/v${version}/OpenTabletDriver.deb";
-    sha256 = "sha256-LJqH3+JckPF7S/1uBE2X81jxWg0MF9ff92Ei8WPEA2w=";
+    hash = "sha256-zWSJlkn7K/meTycWNTinC0hp0JubF22dJNOJeEIfGtI=";
   };
 
   dotnetInstallFlags = [ "--framework=net6.0" ];

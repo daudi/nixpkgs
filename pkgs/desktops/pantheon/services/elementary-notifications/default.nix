@@ -19,22 +19,21 @@
 
 stdenv.mkDerivation rec {
   pname = "elementary-notifications";
-  version = "6.0.3";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "elementary";
     repo = "notifications";
     rev = version;
-    sha256 = "sha256-B1wo1N4heG872klFJOBKOEds0+6aqtvkTGefi97bdU8=";
+    sha256 = "sha256-i7fSKnP4W12cfax5IXm/Zgy5vP5z7S43S80gvzWpFCE=";
   };
 
   patches = [
-    # Backports https://github.com/elementary/notifications/pull/184
-    # Needed for https://github.com/elementary/wingpanel-indicator-notifications/pull/252
-    # Should be part of next bump
+    # Fix broken notification filter
+    # https://github.com/elementary/notifications/pull/207
     (fetchpatch {
-      url = "https://github.com/elementary/notifications/commit/bd159979dbe3dbe6f3f1da7acd8e0721cc20ef80.patch";
-      sha256 = "sha256-cOfeXwoMVgvbA29axyN7HtYKTgCtGxAPrB2PA/x8RKY=";
+      url = "https://github.com/elementary/notifications/commit/4691ec869316be94598d8e55e1cd3bd525e8e149.patch";
+      sha256 = "sha256-4x/Us92Mgws5v+ZQiKvjQ4ixfBnU8oTQ92rc+nf8Zdg=";
     })
   ];
 

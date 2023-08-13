@@ -10,20 +10,19 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "ruff";
-  version = "0.0.275";
+  version = "0.0.284";
 
   src = fetchFromGitHub {
     owner = "astral-sh";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-HsoycugHzgudY3Aixv5INlOLTjLMzP+gKMMKIreiODs=";
+    hash = "sha256-MAlIepodGQL2tHRIPXsHLg4rDYgjfq1opaXIkjNNW1I=";
   };
 
   cargoLock = {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "libcst-0.1.0" = "sha256-jG9jYJP4reACkFLrQBWOYH6nbKniNyFVItD0cTZ+nW0=";
-      "ruff_text_size-0.0.0" = "sha256-oIMZ+7oCID0Ud9Ss6hZjJDvAv7wepyODU31Pb3EOxiM=";
+      "libcst-0.1.0" = "sha256-FgQE8ofRXQs/zHh7AKscXu0deN3IG+Nk/h+a09Co5R8=";
       "unicode_names2-0.6.0" = "sha256-eWg9+ISm/vztB0KIdjhq5il2ZnwGJQCleCYfznCI3Wg=";
     };
   };
@@ -45,6 +44,11 @@ rustPlatform.buildRustPackage rec {
     export JEMALLOC_SYS_WITH_LG_VADDR=48
   '';
 
+  # tests expect no colors
+  preCheck = ''
+    export NO_COLOR=1
+  '';
+
   postInstall = ''
     installShellCompletion --cmd ruff \
       --bash <($out/bin/ruff generate-shell-completion bash) \
@@ -61,6 +65,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/astral-sh/ruff";
     changelog = "https://github.com/astral-sh/ruff/releases/tag/v${version}";
     license = licenses.mit;
+    mainProgram = "ruff";
     maintainers = with maintainers; [ figsoda ];
   };
 }

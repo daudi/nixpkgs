@@ -1,14 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, ninja, makeWrapper, CoreFoundation, Foundation }:
+{ lib, stdenv, fetchFromGitHub, ninja, makeWrapper, CoreFoundation, Foundation, ditto }:
 
 stdenv.mkDerivation rec {
   pname = "lua-language-server";
-  version = "3.6.22";
+  version = "3.6.25";
 
   src = fetchFromGitHub {
     owner = "luals";
     repo = "lua-language-server";
     rev = version;
-    sha256 = "sha256-0A5bbWoZtfL6NLG9nr8u4k1pLP1Fj/+A4ep2uN7x41o=";
+    sha256 = "sha256-fERsqOjuZSIPpTEAQbKZ/ZYzQENxJi8Gibb6Oi073pA=";
     fetchSubmodules = true;
   };
 
@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
   buildInputs = lib.optionals stdenv.isDarwin [
     CoreFoundation
     Foundation
+    ditto
   ];
 
   postPatch = ''

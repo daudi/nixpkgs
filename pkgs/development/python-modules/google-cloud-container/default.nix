@@ -13,14 +13,14 @@
 
 buildPythonPackage rec {
   pname = "google-cloud-container";
-  version = "2.25.0";
+  version = "2.29.0";
   format = "setuptools";
 
   disabled = pythonOlder "3.7";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-VJ+iu3cd+iVFLT3v/sLUeh0wbpKjaVP/KY1YbwPXKtM=";
+    hash = "sha256-kBcdzhfr5k5MiSJu3tVyE09a5whQgj6m1AsUEwcQxS4=";
   };
 
   propagatedBuildInputs = [
@@ -52,6 +52,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/googleapis/python-container";
     changelog = "https://github.com/googleapis/python-container/blob/v${version}/CHANGELOG.md";
     license = licenses.asl20;
-    maintainers = with maintainers; [ SuperSandro2000 ];
+    maintainers = with maintainers; [ ];
   };
 }

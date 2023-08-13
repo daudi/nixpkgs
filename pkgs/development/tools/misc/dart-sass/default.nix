@@ -3,6 +3,10 @@
 , buildDartApplication
 , buf
 , protoc-gen-dart
+, testers
+, dart-sass
+, runCommand
+, writeText
 }:
 
 let
@@ -15,17 +19,17 @@ let
 in
 buildDartApplication rec {
   pname = "dart-sass";
-  version = "1.63.3";
+  version = "1.65.1";
 
   src = fetchFromGitHub {
     owner = "sass";
     repo = pname;
     rev = version;
-    hash = "sha256-PBFBepG7b5M9LKSQOp7+mVhtwSLgQzUTu3i1055uNBk=";
+    hash = "sha256-q6UY+A7JFDYb9hzvr2SYI9GfkY9bg49fQkUM7gHKOBU=";
   };
 
   pubspecLockFile = ./pubspec.lock;
-  vendorHash = "sha256-ciJUjkItnwzKH6k8a5zxIbARQAEfg/GJEsKfSaygsXU=";
+  vendorHash = "sha256-nIiffqM5HwJmORdONz+RADAPTISrz/3/HxK4aOSl5cM=";
 
   nativeBuildInputs = [
     buf
@@ -46,5 +50,32 @@ buildDartApplication rec {
     mainProgram = "sass";
     license = licenses.mit;
     maintainers = with maintainers; [ lelgenio ];
+  };
+
+  passthru.tests = {
+    version = testers.testVersion {
+      package = dart-sass;
+      command = "dart-sass --version";
+    };
+
+    simple = testers.testEqualContents {
+      assertion = "dart-sass compiles a basic scss file";
+      expected = writeText "expected" ''
+        body h1{color:#123}
+      '';
+      actual = runCommand "actual" {
+        nativeBuildInputs = [ dart-sass ];
+        base = writeText "base" ''
+          body {
+            $color: #123;
+            h1 {
+              color: $color;
+            }
+          }
+        '';
+      } ''
+        dart-sass --style=compressed $base > $out
+      '';
+    };
   };
 }
