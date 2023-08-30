@@ -42,18 +42,18 @@ in
     jdk = jdk17;
   };
 
-  pdfstudio2021 = callPackage ./common.nix rec {
-    inherit desktopName longDescription pname program year;
-    version = "${year}.2.1";
-    src = fetchurl {
-      url = "https://download.qoppa.com/pdfstudio/v${year}/PDFStudio_v${dot2dash version}_linux64.deb";
-      sha256 = "sha256-yELpza2C3HJJIP+ZQP7x3Tfez0Nl6ctCbHCmTmpX3jo=";
-    };
-    extraBuildInputs = [
-      (lib.getLib stdenv.cc.cc)  # for libstdc++.so.6 and libgomp.so.1
-    ];
-    jdk = jdk11;
-  };
+  # pdfstudio2021 = callPackage ./common.nix rec {
+  #   inherit desktopName longDescription pname program year;
+  #   version = "${year}.2.1";
+  #   src = fetchurl {
+  #     url = "https://download.qoppa.com/pdfstudio/v${year}/PDFStudio_v${dot2dash version}_linux64.deb";
+  #     sha256 = "sha256-yELpza2C3HJJIP+ZQP7x3Tfez0Nl6ctCbHCmTmpX3jo=";
+  #   };
+  #   extraBuildInputs = [
+  #     (lib.getLib stdenv.cc.cc)  # for libstdc++.so.6 and libgomp.so.1
+  #   ];
+  #   jdk = jdk11;
+  # };
 
   pdfstudio2022 = callPackage ./common.nix rec {
     inherit desktopName longDescription pname program year;
